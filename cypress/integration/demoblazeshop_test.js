@@ -75,4 +75,5 @@ describe('testing_ecommerce_shop', () => {
         cy.wait(500);
         cy.getCookie('tokenp_').should('not.exist');
     });
+    
 });
