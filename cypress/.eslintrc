@@ -1,0 +1,7 @@
+{
+    "extends": ["eslint-config-getresponse-base", "plugin:cypress/recommended"],
+    "plugins": [
+      "cypress"
+    ]
+  }
+  

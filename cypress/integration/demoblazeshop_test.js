@@ -1,79 +1,136 @@
 /// <reference types="cypress" />
 
 describe('testing_ecommerce_shop', () => {
-    it('Creating an account works', () => {
-        cy.visit('https://www.demoblaze.com/');
-        cy.get('#signin2').click();
-        cy.contains('Username').should('exist');
-        cy.contains('Password').should('exist');
-        cy.wait(500);
-        cy.get('#sign-username').click().type('new@admin.com');
-        cy.get('#sign-password').click().type('newpassword');
-        cy.get('[onclick="register()"]').click();
-    });
-
-    it('Logging in works', () => {
-        cy.visit('https://www.demoblaze.com/');
-        cy.get('#login2').should('exist').click();
-        cy.contains('Username').should('exist');
-        cy.contains('Password').should('exist');
-        cy.wait(500);
-        cy.get('#loginusername').click().type('new@admin.com');
-        cy.get('#loginpassword').click().type('newpassword');
-        cy.get('[onclick="logIn()"]').click();
-        cy.contains('Welcome new@admin.com').should('be.visible');
-    });
-
     beforeEach(() => {
         cy.visit('https://www.demoblaze.com/');
         Cypress.Cookies.preserveOnce('tokenp_');
     });
 
-    it('Searching products through categories', () => {
-        cy.contains('CATEGORIES').should('exist');
-        cy.contains('Phones').click();
-        cy.contains('Iphone 6 32gb').should('exist');
-        cy.contains('Laptops').click();
-        cy.contains('MacBook air').should('exist');
-        cy.contains('Monitors').click();
-        cy.contains('Apple monitor 24').should('exist');
+    it('should register the user', () => {
+        cy
+            .get('#signin2').click()
+            .window()
+            .contains('Username')
+            .window()
+            .contains('Password')
+            .wait(500)
+            .window()
+            .get('#sign-username')
+            .click()
+            .type('new@admin.com')
+            .get('#sign-password')
+            .click()
+            .type('newpassword')
+            .get('[onclick="register()"]')
+            .click();
     });
 
-    it('Adding and deleting products', () => {
-        cy.contains('Samsung galaxy s7').click();
-        cy.contains('Add to cart').should('exist');
-        cy.get('[onclick="addToCart(4)"]').click();
-        cy.wait(500);
-        cy.contains('Cart').click();
-        cy.url().should('include', '/cart.html');
-        cy.contains('Samsung galaxy s7').should('exist');
-        cy.contains('Delete').click();
-        cy.contains('Samsung galaxy s7').should('not.exist');
+    it('should log in the user', () => {
+        cy
+            .get('#login2').should('exist').click()
+            .window()
+            .contains('Username')
+            .window()
+            .contains('Password')
+            .wait(500)
+            .window()
+            .get('#loginusername')
+            .click()
+            .type('new@admin.com')
+            .get('#loginpassword')
+            .click()
+            .type('newpassword')
+            .get('[onclick="logIn()"]')
+            .click()
+            .window()
+            .contains('Welcome new@admin.com');
     });
 
-    it('Buying products works', () => {
-        cy.contains('Nokia lumia 1520').click();
-        cy.contains('Add to cart').should('exist');
-        cy.get('[onclick="addToCart(2)"]').click();
-        cy.wait(500);
-        cy.contains('Cart').click();
-        cy.contains('Nokia lumia 1520').should('exist');
-        cy.contains('Place Order').click();
-        cy.wait(500);
-        cy.get('#name').type('Cindy H. Brito');
-        cy.get('#country').type('Cindy');
-        cy.get('#city').type('United States');
-        cy.get('#card').type('5558 4078 6253 9931');
-        cy.get('#month').type('7');
-        cy.get('#year').type('2022');
-        cy.contains('Purchase').click();
-        cy.contains('Thank you for your purchase!').should('be.visible');
+    it('should search products through categories', () => {
+        cy
+            .contains('CATEGORIES')
+            .window()
+            .contains('Phones')
+            .click()
+            .window()
+            .contains('Iphone 6 32gb')
+            .window()
+            .contains('Laptops')
+            .click()
+            .window()
+            .contains('MacBook air')
+            .window()
+            .contains('Monitors')
+            .click()
+            .window()
+            .contains('Apple monitor 24');
     });
 
-    it('Logging out works', () => {
-        cy.get('#logout2').click();
-        cy.wait(500);
-        cy.getCookie('tokenp_').should('not.exist');
+    it('should add and delete products', () => {
+        cy
+            .contains('Samsung galaxy s7').click()
+            .window()
+            .contains('Add to cart')
+            .get('[onclick="addToCart(4)"]')
+            .click()
+            .wait(500)
+            .window()
+            .contains('Cart')
+            .click()
+            .url()
+            .should('include', '/cart.html')
+            .window()
+            .contains('Samsung galaxy s7')
+            .window()
+            .contains('Delete')
+            .click()
+            .window()
+            .contains('Samsung galaxy s7')
+            .should('not.exist');
     });
-    
+
+    it('should allow user to buy products', () => {
+        cy
+            .contains('Nokia lumia 1520').click()
+            .window()
+            .contains('Add to cart')
+            .get('[onclick="addToCart(2)"]')
+            .click()
+            .wait(500)
+            .window()
+            .contains('Cart')
+            .click()
+            .window()
+            .contains('Nokia lumia 1520')
+            .window()
+            .contains('Place Order')
+            .click()
+            .wait(500)
+            .get('#name')
+            .type('Cindy H. Brito')
+            .get('#country')
+            .type('Cindy')
+            .get('#city')
+            .type('United States')
+            .get('#card')
+            .type('5558 4078 6253 9931')
+            .get('#month')
+            .type('7')
+            .get('#year')
+            .type('2022')
+            .window()
+            .contains('Purchase')
+            .click()
+            .window()
+            .contains('Thank you for your purchase!');
+    });
+
+    it('should log out the user', () => {
+        cy
+            .get('#logout2').click()
+            .wait(500)
+            .window()
+            .contains('Welcome new@admin.com')
+            .should('not.exist');
+    });
 });
