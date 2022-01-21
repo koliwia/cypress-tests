@@ -10,7 +10,7 @@ describe('testing_ecommerce_shop', () => {
         cy
             .get('#signin2').click()
             .window()
-            .contains('Username')
+            .contains('Uffdfdf')
             .window()
             .contains('Password')
             .wait(500)
