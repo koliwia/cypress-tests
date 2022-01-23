@@ -7,10 +7,10 @@ describe('testing_ecommerce_shop', () => {
     });
 
     it('should register the user', () => {
-        cy
-            .get('#signin2').click()
+        cy.get('#signin2')
+            .click()
             .window()
-            .contains('Uffdfdf')
+            .contains('Username')
             .window()
             .contains('Password')
             .wait(500)
@@ -26,8 +26,9 @@ describe('testing_ecommerce_shop', () => {
     });
 
     it('should log in the user', () => {
-        cy
-            .get('#login2').should('exist').click()
+        cy.get('#login2')
+            .should('exist')
+            .click()
             .window()
             .contains('Username')
             .window()
@@ -47,8 +48,7 @@ describe('testing_ecommerce_shop', () => {
     });
 
     it('should search products through categories', () => {
-        cy
-            .contains('CATEGORIES')
+        cy.contains('CATEGORIES')
             .window()
             .contains('Phones')
             .click()
@@ -67,8 +67,8 @@ describe('testing_ecommerce_shop', () => {
     });
 
     it('should add and delete products', () => {
-        cy
-            .contains('Samsung galaxy s7').click()
+        cy.contains('Samsung galaxy s7')
+            .click()
             .window()
             .contains('Add to cart')
             .get('[onclick="addToCart(4)"]')
@@ -90,8 +90,8 @@ describe('testing_ecommerce_shop', () => {
     });
 
     it('should allow user to buy products', () => {
-        cy
-            .contains('Nokia lumia 1520').click()
+        cy.contains('Nokia lumia 1520')
+            .click()
             .window()
             .contains('Add to cart')
             .get('[onclick="addToCart(2)"]')
@@ -126,11 +126,6 @@ describe('testing_ecommerce_shop', () => {
     });
 
     it('should log out the user', () => {
-        cy
-            .get('#logout2').click()
-            .wait(500)
-            .window()
-            .contains('Welcome new@admin.com')
-            .should('not.exist');
+        cy.get('#logout2').click().wait(500).window().contains('Welcome new@admin.com').should('not.exist');
     });
 });
